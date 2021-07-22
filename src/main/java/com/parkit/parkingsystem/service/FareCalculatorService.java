@@ -14,18 +14,19 @@ public class FareCalculatorService {
 		double inTime = ticket.getInTime().getTime();
 		double outTime = ticket.getOutTime().getTime();
 
-		// TODO: Some tests are failing here. Need to check if this logic is correct
-		// nous obtenons le résultat en minute
-		double durationInPartOfHour = (outTime - inTime) / 1000.00 / 60.00 / 60.00;
+		double roundedDurationInPartOfHour = (double) Math.round(((outTime - inTime) / (1000.0 * 60.0 * 60.0)) * 1000) / 1000;
+
+		if (roundedDurationInPartOfHour <= 0.5) {
+			roundedDurationInPartOfHour = 0;
+		}
 
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR: {
-			// Nous voulons le nombre d'heurs pas de minutes de stationnement
-			ticket.setPrice(durationInPartOfHour * Fare.CAR_RATE_PER_HOUR);
+			ticket.setPrice(roundedDurationInPartOfHour * Fare.CAR_RATE_PER_HOUR);
 			break;
 		}
 		case BIKE: {
-			ticket.setPrice(durationInPartOfHour * Fare.BIKE_RATE_PER_HOUR);
+			ticket.setPrice(roundedDurationInPartOfHour * Fare.BIKE_RATE_PER_HOUR);
 			break;
 		}
 		default:

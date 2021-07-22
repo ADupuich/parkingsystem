@@ -112,7 +112,7 @@ public class ParkingService {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
 				parkingSpot.setAvailable(true);
 				parkingSpotDAO.updateParking(parkingSpot);
-				DecimalFormat df = new DecimalFormat("0.00");
+				DecimalFormat df = new DecimalFormat("#####.##");
 				System.out.println("Please pay the parking fare: " + df.format(ticket.getPrice()) + " €");
 				System.out.println(
 						"Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
