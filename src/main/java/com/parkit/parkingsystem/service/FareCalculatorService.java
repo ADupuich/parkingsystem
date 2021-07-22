@@ -14,9 +14,10 @@ public class FareCalculatorService {
 		double inTime = ticket.getInTime().getTime();
 		double outTime = ticket.getOutTime().getTime();
 
-		double roundedDurationInPartOfHour = (double) Math.round(((outTime - inTime) / (1000.0 * 60.0 * 60.0)) * 1000) / 1000;
+		double roundedDurationInPartOfHour = (double) Math.round(((outTime - inTime) / (1000.0 * 60.0 * 60.0)) * 1000)
+				/ 1000;
 
-		if (roundedDurationInPartOfHour <= 0.5) {
+		if (roundedDurationInPartOfHour < 0.5) {
 			roundedDurationInPartOfHour = 0;
 		}
 

@@ -112,7 +112,7 @@ public class ParkingDataBaseIT {
 		// Etape 4 : vérification que le prix du ticket est correct
 		// On teste que la valeur est différente de 0
 		// On ne peut pas mocker le prix (variable static).
-		Assertions.assertNotEquals(0.0, ticket.getPrice());
+		Assertions.assertEquals(0, ticket.getPrice());
 
 	}
 }
