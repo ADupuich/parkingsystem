@@ -31,17 +31,17 @@
             <version>8.0.26</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.3.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.3.2</version>
-            <scope>test</scope>
-        </dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter</artifactId>
+		    <version>5.5.2</version>
+		    <scope>test</scope>
+	   </dependency>
+		<dependency>
+		    <groupId>org.assertj</groupId>
+		    <artifactId>assertj-core</artifactId>
+		    <version>3.20.2</version>
+		    <scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
@@ -59,6 +59,21 @@
             <artifactId>maven-assembly-plugin</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+		    <groupId>com.puppycrawl.tools</groupId>
+		    <artifactId>checkstyle</artifactId>
+		    <version>8.44</version>
+		</dependency>
+		<dependency>
+   			<groupId>com.google.code.findbugs</groupId>
+		    <artifactId>findbugs</artifactId>
+		    <version>3.0.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.findbugs</groupId>
+		    <artifactId>jsr305</artifactId>
+		    <version>3.0.2</version>
+		</dependency>     
     </dependencies>
 
     <build>
