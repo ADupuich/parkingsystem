@@ -19,10 +19,10 @@ public class TicketDAO {
 	private static final Logger logger = LogManager.getLogger("TicketDAO");
 
 	public DataBaseConfig dataBaseConfig = new DataBaseConfig();
+	private Connection con = null;
 
-	@SuppressWarnings("finally")
 	public boolean saveTicket(Ticket ticket) {
-		Connection con = null;
+
 		try {
 			con = dataBaseConfig.getConnection();
 			PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET);
@@ -37,14 +37,18 @@ public class TicketDAO {
 		} catch (Exception ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
-			dataBaseConfig.closeConnection(con);
-			return false;
+			if (con != null) {
+				try {
+					dataBaseConfig.closeConnection(con);
+				} catch (Exception e) {
+
+				}
+			}
 		}
+		return false;
 	}
 
-	@SuppressWarnings("finally")
 	public Ticket getTicket(String vehicleRegNumber) {
-		Connection con = null;
 		Ticket ticket = null;
 		try {
 			con = dataBaseConfig.getConnection();
@@ -64,16 +68,23 @@ public class TicketDAO {
 			}
 			dataBaseConfig.closeResultSet(rs);
 			dataBaseConfig.closePreparedStatement(ps);
+
 		} catch (Exception ex) {
 			logger.error("Error fetching next available slot", ex);
 		} finally {
-			dataBaseConfig.closeConnection(con);
-			return ticket;
+			if (con != null) {
+				try {
+					dataBaseConfig.closeConnection(con);
+				} catch (Exception e) {
+
+				}
+
+			}
 		}
+		return ticket;
 	}
 
 	public boolean updateTicket(Ticket ticket) {
-		Connection con = null;
 		try {
 			con = dataBaseConfig.getConnection();
 			PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET);
@@ -85,8 +96,43 @@ public class TicketDAO {
 		} catch (Exception ex) {
 			logger.error("Error saving ticket info", ex);
 		} finally {
-			dataBaseConfig.closeConnection(con);
+			if (con != null) {
+				try {
+					dataBaseConfig.closeConnection(con);
+				} catch (Exception e) {
+
+				}
+			}
 		}
 		return false;
+	}
+
+	/**
+	 * Request of a vehicleRegNumber to see his recurrence in parking
+	 * 
+	 * @return ticket quantity
+	 */
+	public int countTicketByVehiculeRegNumber(String vehicleRegNumber) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int ticketQuantity = 0;
+		try {
+			con = dataBaseConfig.getConnection();
+
+			ps = con.prepareStatement(DBConstants.COUNT_ID);
+			ps.setString(1, vehicleRegNumber);
+			rs = ps.executeQuery();
+			rs.next();
+			ticketQuantity = rs.getInt(1);
+
+		} catch (Exception ex) {
+			logger.error("Error counting recurrent id for vehicle", ex);
+		} finally {
+			dataBaseConfig.closeConnection(con);
+			dataBaseConfig.closeResultSet(rs);
+			dataBaseConfig.closePreparedStatement(ps);
+		}
+
+		return ticketQuantity;
 	}
 }

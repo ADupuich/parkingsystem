@@ -9,6 +9,7 @@ public class Ticket {
 	private double price;
 	private Date inTime;
 	private Date outTime;
+	private int ticketQuantity;
 
 	public int getId() {
 		return id;
@@ -56,6 +57,13 @@ public class Ticket {
 
 	public void setOutTime(Date outTime) {
 		this.outTime = outTime;
-		System.out.println("@@@@@@ Ticket " + this.outTime);
+	}
+
+	public void setTicketQuantity(int ticketQuantity) {
+		this.ticketQuantity = ticketQuantity;
+	}
+
+	public int getTicketQuantity() {
+		return ticketQuantity;
 	}
 }

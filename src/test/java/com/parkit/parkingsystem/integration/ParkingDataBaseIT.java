@@ -88,20 +88,17 @@ public class ParkingDataBaseIT {
 	@Test
 	public void testParkingLotExit() throws Exception {
 		// DP : On relance le test précédent
-		testParkingACar();
-
-		// Initialisation du service parking
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+
+		// Etape 1 : récupérer le ticket du véhicule immatriculé "ABCDEF" ==>
+		// mocké
+		Ticket ticket = ticketDAO.getTicket("ABCDEF");
 
 		// Récupération du véhicule pour la sortie
 		parkingService.processExitingVehicle();
 
 		// TODO: check that the fare generated and out time are populated
 		// correctly in the database
-
-		// Etape 1 : récupérer le ticket du véhicule immatriculé "ABCDEF" ==>
-		// mocké
-		Ticket ticket = ticketDAO.getTicket("ABCDEF");
 
 		// Etape 2 : vérification de l'existence du ticket
 		Assertions.assertNotNull(ticket);
