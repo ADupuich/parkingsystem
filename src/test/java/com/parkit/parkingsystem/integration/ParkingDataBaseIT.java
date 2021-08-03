@@ -87,25 +87,18 @@ public class ParkingDataBaseIT {
 
 	@Test
 	public void testParkingLotExit() throws Exception {
-		// DP : On relance le test précédent
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
-		// Etape 1 : récupérer le ticket du véhicule immatriculé "ABCDEF" ==>
-		// mocké
+		parkingService.processIncomingVehicle();
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
-
-		// Récupération du véhicule pour la sortie
-		parkingService.processExitingVehicle();
-
 		// TODO: check that the fare generated and out time are populated
 		// correctly in the database
-
 		// Etape 2 : vérification de l'existence du ticket
 		Assertions.assertNotNull(ticket);
-
+		parkingService.processExitingVehicle();
+		ticket = ticketDAO.getTicket("ABCDEF");
 		// Etape 3 : vérification que le ticket a une date de sortie du véhicule
 		Assertions.assertNotNull(ticket.getOutTime());
-
 		// Etape 4 : vérification que le prix du ticket est correct
 		// On teste que la valeur est différente de 0
 		// On ne peut pas mocker le prix (variable static).
