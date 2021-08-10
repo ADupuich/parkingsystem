@@ -2,6 +2,8 @@ package com.parkit.parkingsystem.integration;
 
 import static org.mockito.Mockito.when;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -88,6 +90,7 @@ public class ParkingDataBaseIT {
 	@Test
 	public void testParkingLotExit() throws Exception {
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+		Date outTime = new Date();
 
 		parkingService.processIncomingVehicle();
 		Ticket ticket = ticketDAO.getTicket("ABCDEF");
@@ -96,7 +99,7 @@ public class ParkingDataBaseIT {
 		// Etape 2 : vérification de l'existence du ticket
 		Assertions.assertNotNull(ticket);
 		parkingService.processExitingVehicle();
-		ticket = ticketDAO.getTicket("ABCDEF");
+		ticket.setOutTime(outTime);
 		// Etape 3 : vérification que le ticket a une date de sortie du véhicule
 		Assertions.assertNotNull(ticket.getOutTime());
 		// Etape 4 : vérification que le prix du ticket est correct
